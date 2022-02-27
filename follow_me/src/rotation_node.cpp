@@ -114,7 +114,7 @@ void init_rotation()
             rotation_to_do *=-1;
 
         //we initialize the pid for the control of rotation
-        // initial_orientation = ;
+        initial_orientation = current_orientation;
         error_integral_rotation = 0;
         error_previous_rotation = 0;
 
@@ -131,30 +131,39 @@ void compute_rotation()
 {
 
     ROS_INFO("current_orientation: %f, initial_orientation: %f", current_orientation*180/M_PI, initial_orientation*180/M_PI);
-    //rotation_done = ...;
+    rotation_done = current_orientation;
 
-    //do not forget that rotation_done must always be between -M_PI and +M_PI
-
-    //error_rotation = ...;
+    error_rotation = rotation_to_do - rotation_done;
     ROS_INFO("rotation_to_do: %f, rotation_done: %f, error_rotation: %f", rotation_to_do*180/M_PI, rotation_done*180/M_PI, error_rotation*180/M_PI);
 
-    //cond_rotation = ...; cond_rotation is used to control if we stop or not the pid
+    //do not forget that rotation_done must always be between -M_PI and +M_PI
+    if ( error_rotation > M_PI ) {
+        ROS_WARN("error_rotation > 180 degrees: %f degrees -> %f degrees", error_rotation*180/M_PI, (error_rotation-2*M_PI)*180/M_PI);
+        error_rotation -= 2*M_PI;
+    }
+    else if ( error_rotation < -M_PI ) {
+        ROS_WARN("error_rotation < -180 degrees: %f degrees -> %f degrees", error_rotation*180/M_PI, (error_rotation+2*M_PI)*180/M_PI);
+        error_rotation += 2*M_PI;
+    }
+
+    cond_rotation = fabs(error_rotation) > rotation_error_threshold; // cond_rotation is used to control if we stop or not the pid
 
     rotation_speed = 0;
     if ( cond_rotation )
     {
         //Implementation of a PID controller for rotation_to_do;
-
-        //float error_derivation_rotation = ...;
+        float error_derivation_rotation = error_rotation - error_previous_rotation;
         error_previous_rotation = error_rotation;
-        //ROS_INFO("error_derivation_rotation: %f", error_derivation_rotation);
+        ROS_INFO("error_derivation_rotation: %f", error_derivation_rotation);
 
-        //error_integral_rotation = ...;
-        //ROS_INFO("error_integral_rotation: %f", error_integral_rotation);
+        error_integral_rotation += error_rotation;
+        ROS_INFO("error_integral_rotation: %f", error_integral_rotation);
 
         //control of rotation with a PID controller
-        //rotation_speed = ...;
+        rotation_speed = kpr * error_rotation + kir * error_integral_rotation + kdr * error_derivation_rotation;
         ROS_INFO("rotation_speed: %f", rotation_speed*180/M_PI);
+
+        error_previous_rotation = error_rotation;
     }
     else
         ROS_WARN("pid for rotation will stop");
