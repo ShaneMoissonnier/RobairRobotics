@@ -336,11 +336,10 @@ void perform_clustering() {
     // - cluster_middle to store the middle of the cluster
     // - cluster_dynamic to store the percentage of hits of the current cluster that are dynamic
 
-    end = lnb_beams - 1;
+    end = nb_beams - 1;
 
     cluster_size[nb_cluster] = distancePoints(current_scan[end], current_scan[start]);
-    cluster_middle[nb_cluster].x = (current_scan[end].x + current_scan[start].x)/2.0; 
-    cluster_middle[nb_cluster].y = (current_scan[end].y + current_scan[start].y)/2.0;
+    cluster_middle[nb_cluster] = middlePoint(current_scan[end], current_scan[start]);
 	       
     cluster_dynamic[nb_cluster] = (nb_dynamic * 100)/(end-start);
 
