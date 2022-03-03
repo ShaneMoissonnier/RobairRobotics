@@ -130,6 +130,7 @@ void update() {
             if (previous_robot_moving)
             	store_background();
 
+	    detect_motion();
             perform_clustering();//to perform clustering
             detect_legs();//to detect moving legs using cluster
             detect_persons();//to detect moving_person using moving legs detected
