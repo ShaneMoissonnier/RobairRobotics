@@ -272,7 +272,7 @@ void perform_clustering() {
             // - cluster_dynamic to store the percentage of hits of the current cluster that are dynamic
             cluster_size[nb_cluster] = distancePoints(current_scan[end], current_scan[start]);
             cluster_middle[nb_cluster] = middlePoint(current_scan[end], current_scan[start]);
-            cluster_dynamic[nb_cluster] =  (nb_dynamic * 100)/(end - start);
+            cluster_dynamic[nb_cluster] =  (nb_dynamic * 100)/(end - start + 1);
             
             //graphical display of the end of the current cluster in red
             display[nb_pts] = current_scan[end];
@@ -341,7 +341,7 @@ void perform_clustering() {
     cluster_size[nb_cluster] = distancePoints(current_scan[end], current_scan[start]);
     cluster_middle[nb_cluster] = middlePoint(current_scan[end], current_scan[start]);
 	       
-    cluster_dynamic[nb_cluster] = (nb_dynamic * 100)/(end-start);
+    cluster_dynamic[nb_cluster] = (nb_dynamic * 100)/(end-start+1);
 
     //graphical display of the end of the current cluster in red
     display[nb_pts] = current_scan[end];
