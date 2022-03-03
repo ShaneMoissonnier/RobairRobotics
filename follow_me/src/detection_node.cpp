@@ -474,7 +474,7 @@ void detect_persons() {
                 
                 // we update the person_detected table to store the middle of the person
                 // we update the person_dynamic table to know if the person is moving or not
-                person_detected[nb_persons_detected] = middlePoint(leg_detected[loop_leg1], leg_detected[loop_leg2];)
+                person_detected[nb_persons_detected] = middlePoint(leg_detected[loop_leg1], leg_detected[loop_leg2]);
                 person_dynamic[nb_persons_detected] = leg_dynamic[loop_leg1] && leg_dynamic[loop_leg2];
                 
                 
