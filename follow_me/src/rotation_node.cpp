@@ -131,7 +131,7 @@ void compute_rotation()
 {
 
     ROS_INFO("current_orientation: %f, initial_orientation: %f", current_orientation*180/M_PI, initial_orientation*180/M_PI);
-    rotation_done = current_orientation;
+    rotation_done = current_orientation - initial_orientation;
 
     error_rotation = rotation_to_do - rotation_done;
     ROS_INFO("rotation_to_do: %f, rotation_done: %f, error_rotation: %f", rotation_to_do*180/M_PI, rotation_done*180/M_PI, error_rotation*180/M_PI);
