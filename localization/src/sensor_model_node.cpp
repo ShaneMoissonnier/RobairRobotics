@@ -156,8 +156,8 @@ int sensor_model(float x, float y, float o)
         //for each hit of the laser, we compute its position in the map and check if it is occupied or not
 
         geometry_msgs::Point hit;
-        //hit.x = ...;
-        //hit.y = ..;
+        hit.x = x + r[loop] * cos(o + theta[loop]);
+        hit.y = y + r[loop] * sin(o + theta[loop]);
 
         // we add the current hit to the hits to display
         display[nb_pts] = hit;
