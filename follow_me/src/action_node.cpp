@@ -119,7 +119,7 @@ public:
             {
                 compute_rotation();
                 compute_translation();
-                cond_goal = fabs(error_rotation) > rotation_error_threshold || fabs(error_translation) > translation_error_threshold;
+                cond_goal = fabs(error_rotation) > error_rotation_threshold || fabs(error_translation) > error_translation_threshold;
                 combine_rotation_and_translation();
                 move_robot();
             }
@@ -188,7 +188,7 @@ public:
             error_rotation += 2 * M_PI;
         }
 
-        cond_rotation = fabs(error_rotation) > rotation_error_threshold; // cond_rotation is used to control if we stop or not the pid
+        cond_rotation = fabs(error_rotation) > error_rotation_threshold; // cond_rotation is used to control if we stop or not the pid
 
         rotation_speed = 0;
         if (cond_rotation)
